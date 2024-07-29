@@ -1,0 +1,97 @@
+[gd_scene load_steps=13 format=3 uid="uid://b2n4sgc6bs1i0"]
+
+[ext_resource type="Script" path="res://Scenes/UI/Crystal Counter/Crystal_Counter.gd" id="1_2j7rf"]
+[ext_resource type="Texture2D" uid="uid://chs8o3ij0whfo" path="res://Assets/Items/Diamond/diamond-sh.png" id="2_336ye"]
+[ext_resource type="FontFile" uid="uid://dmg6577mitj70" path="res://Assets/Fonts/PIXY.otf" id="3_qx421"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qc3g8"]
+atlas = ExtResource("2_336ye")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pt7uh"]
+atlas = ExtResource("2_336ye")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e56iw"]
+atlas = ExtResource("2_336ye")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iavsy"]
+atlas = ExtResource("2_336ye")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2mgng"]
+atlas = ExtResource("2_336ye")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lg6sm"]
+atlas = ExtResource("2_336ye")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_28kn5"]
+atlas = ExtResource("2_336ye")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vhf4c"]
+atlas = ExtResource("2_336ye")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_53k42"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qc3g8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pt7uh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e56iw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iavsy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2mgng")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lg6sm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_28kn5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vhf4c")
+}],
+"loop": true,
+"name": &"default",
+"speed": 9.0
+}]
+
+[node name="Crystal Counter" type="CanvasLayer"]
+script = ExtResource("1_2j7rf")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+modulate = Color(1, 1, 1, 0.54902)
+offset_left = 53.0
+offset_top = 44.0
+offset_right = 167.0
+offset_bottom = 90.0
+color = Color(0, 0, 0, 1)
+
+[node name="CrystalIcon" type="AnimatedSprite2D" parent="."]
+modulate = Color(0.419608, 1, 1, 1)
+position = Vector2(75, 68)
+scale = Vector2(1.60938, 1.60938)
+sprite_frames = SubResource("SpriteFrames_53k42")
+autoplay = "default"
+frame_progress = 0.155659
+
+[node name="CrystalCounter" type="Label" parent="."]
+offset_left = 99.0
+offset_top = 44.0
+offset_right = 189.0
+offset_bottom = 98.0
+theme_override_fonts/font = ExtResource("3_qx421")
+theme_override_font_sizes/font_size = 36
+text = "0/3"

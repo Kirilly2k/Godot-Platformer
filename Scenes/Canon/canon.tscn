@@ -1,0 +1,147 @@
+[gd_scene load_steps=11 format=3 uid="uid://dslgxu7u07vb"]
+
+[ext_resource type="Script" path="res://Scenes/Canon/canon.gd" id="1_o5jct"]
+[ext_resource type="Texture2D" uid="uid://c35jskx330qj8" path="res://Assets/Tiles/kings and pigs/Sprites/10-Cannon/Shoot (44x28).png" id="2_hvqwd"]
+[ext_resource type="AudioStream" uid="uid://dg5k13373bwr6" path="res://Assets/Sound/Sfx/italian-cannon-shot_112bpm_G_minor.wav" id="3_pe8np"]
+[ext_resource type="AudioStream" uid="uid://y3d7qpt7w8d4" path="res://Assets/Sound/Sfx/10_UI_Menu_SFX/070_Equip_10.wav" id="4_tmlh3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a1lcj"]
+size = Vector2(21, 19)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vka7l"]
+size = Vector2(24, 19)
+
+[sub_resource type="Animation" id="Animation_fv34p"]
+resource_name = "Death"
+length = 0.5
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Shoot(44x28):visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, false, true, false, true, false, true]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("..:shooting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_ivn6p"]
+resource_name = "Fire"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Shoot(44x28):frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 0]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"fire"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_pcmtx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Shoot(44x28):frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_apb1t"]
+_data = {
+"Death": SubResource("Animation_fv34p"),
+"Fire": SubResource("Animation_ivn6p"),
+"RESET": SubResource("Animation_pcmtx")
+}
+
+[node name="Canon" type="StaticBody2D" groups=["Enemies"]]
+script = ExtResource("1_o5jct")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(7.5, 0.5)
+shape = SubResource("RectangleShape2D_a1lcj")
+
+[node name="Area2D" type="Area2D" parent="."]
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(6, 0.5)
+shape = SubResource("RectangleShape2D_vka7l")
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(-16, 0)
+rotation = -3.14159
+scale = Vector2(1, -1)
+
+[node name="Shoot(44x28)" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 0.913725, 1)
+texture = ExtResource("2_hvqwd")
+hframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Marker2D")
+libraries = {
+"": SubResource("AnimationLibrary_apb1t")
+}
+
+[node name="sfx_shot" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_pe8np")
+volume_db = 4.634
+bus = &"Sfx"
+
+[node name="sfx_break" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_tmlh3")
+volume_db = 9.742
+bus = &"Sfx"

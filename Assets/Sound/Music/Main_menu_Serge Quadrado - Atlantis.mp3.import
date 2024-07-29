@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://ckac1e2pf0kqe"
+path="res://.godot/imported/Main_menu_Serge Quadrado - Atlantis.mp3-88df69ca768e74d8540efcdd91e1501c.mp3str"
+
+[deps]
+
+source_file="res://Assets/Sound/Music/Main_menu_Serge Quadrado - Atlantis.mp3"
+dest_files=["res://.godot/imported/Main_menu_Serge Quadrado - Atlantis.mp3-88df69ca768e74d8540efcdd91e1501c.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

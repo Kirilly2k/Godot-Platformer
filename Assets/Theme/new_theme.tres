@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://b2piwxscusf3p"]
+
+[ext_resource type="FontFile" uid="uid://dmg6577mitj70" path="res://Assets/Fonts/PIXY.otf" id="1_8ngdm"]
+
+[resource]
+default_font = ExtResource("1_8ngdm")
+default_font_size = 31

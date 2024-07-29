@@ -1,0 +1,221 @@
+[gd_scene load_steps=15 format=3 uid="uid://dan62e5rw2lre"]
+
+[ext_resource type="Script" path="res://Scenes/UI/Main Menu/MainMenu.gd" id="1_nm518"]
+[ext_resource type="PackedScene" uid="uid://ccoa2gtlri6cj" path="res://Scenes/UI/Transitions/transition_to_white_start_game.tscn" id="2_2sjip"]
+[ext_resource type="PackedScene" uid="uid://6mg8bphgiol0" path="res://Scenes/UI/Transitions/transition_to_transparent_player_spawned.tscn" id="2_38ttv"]
+[ext_resource type="Theme" uid="uid://b2piwxscusf3p" path="res://Assets/Theme/new_theme.tres" id="2_r8lcp"]
+[ext_resource type="PackedScene" uid="uid://cxj12sseeonlk" path="res://Scenes/PostProcess/post_process.tscn" id="3_87e73"]
+[ext_resource type="PackedScene" uid="uid://d7skqergbrdc" path="res://Scenes/UI/Main Menu Background/main_menu_background.tscn" id="5_txubi"]
+[ext_resource type="AudioStream" uid="uid://ckac1e2pf0kqe" path="res://Assets/Sound/Music/Main_menu_Serge Quadrado - Atlantis.mp3" id="7_arp1u"]
+[ext_resource type="AudioStream" uid="uid://d0hhj3qfyytaj" path="res://Assets/Sound/Sfx/10_UI_Menu_SFX/001_Hover_01.wav" id="8_wrlyc"]
+[ext_resource type="Script" path="res://Scenes/UI/Main Menu/Control.gd" id="9_uxyqh"]
+[ext_resource type="Script" path="res://Scenes/UI/Main Menu/HSlider.gd" id="10_0yd1a"]
+[ext_resource type="Script" path="res://Scenes/UI/Main Menu/HSlider2.gd" id="11_fm7g0"]
+[ext_resource type="Script" path="res://Scenes/UI/Main Menu/HSlider3.gd" id="12_ndax4"]
+
+[sub_resource type="Animation" id="Animation_x8dw0"]
+resource_name = "music_fade_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AudioStreamPlayer:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-16.0, -80.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_32af5"]
+_data = {
+"music_fade_out": SubResource("Animation_x8dw0")
+}
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_nm518")
+
+[node name="transition_transparent_start_level" parent="." instance=ExtResource("2_38ttv")]
+
+[node name="transition_white" parent="." instance=ExtResource("2_2sjip")]
+
+[node name="PostProcess" parent="." instance=ExtResource("3_87e73")]
+
+[node name="MainMenuBackground" parent="." instance=ExtResource("5_txubi")]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 119.0
+offset_top = -248.0
+offset_right = 315.0
+offset_bottom = -70.0
+grow_vertical = 0
+
+[node name="Continue" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Quit")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../NewGame")
+mouse_filter = 2
+theme = ExtResource("2_r8lcp")
+text = "Продолжить
+"
+alignment = 0
+
+[node name="NewGame" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Continue")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Settings")
+mouse_filter = 2
+theme = ExtResource("2_r8lcp")
+text = "Новая игра"
+alignment = 0
+
+[node name="Settings" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../NewGame")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Quit")
+mouse_filter = 2
+theme = ExtResource("2_r8lcp")
+text = "Настройки"
+alignment = 0
+
+[node name="Quit" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../Continue")
+mouse_filter = 2
+theme = ExtResource("2_r8lcp")
+text = "Выйти
+"
+alignment = 0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_arp1u")
+volume_db = -0.043
+autoplay = true
+bus = &"Music"
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_wrlyc")
+volume_db = -6.535
+bus = &"Sfx"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_32af5")
+}
+
+[node name="Control" type="Control" parent="."]
+visible = false
+z_index = 9
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("9_uxyqh")
+
+[node name="Panel" type="Panel" parent="Control"]
+layout_mode = 2
+offset_left = 331.0
+offset_top = 144.0
+offset_right = 641.0
+offset_bottom = 406.0
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 362.0
+offset_top = 181.5
+offset_right = 558.0
+offset_bottom = 318.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Control/VBoxContainer2"]
+layout_mode = 2
+theme = ExtResource("2_r8lcp")
+text = "Общая громкость"
+
+[node name="HSlider" type="HSlider" parent="Control/VBoxContainer2"]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Button")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../HSlider2")
+mouse_filter = 2
+max_value = 1.0
+step = 0.1
+value = 1.0
+script = ExtResource("10_0yd1a")
+bus_name = "Master"
+
+[node name="Label2" type="Label" parent="Control/VBoxContainer2"]
+layout_mode = 2
+theme = ExtResource("2_r8lcp")
+text = "Музыка"
+
+[node name="HSlider2" type="HSlider" parent="Control/VBoxContainer2"]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../HSlider")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../HSlider3")
+mouse_filter = 2
+max_value = 1.0
+step = 0.1
+script = ExtResource("11_fm7g0")
+bus_name = "Music"
+
+[node name="Label3" type="Label" parent="Control/VBoxContainer2"]
+layout_mode = 2
+theme = ExtResource("2_r8lcp")
+text = "Звуки
+"
+
+[node name="HSlider3" type="HSlider" parent="Control/VBoxContainer2"]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../HSlider2")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Button")
+mouse_filter = 2
+max_value = 1.0
+step = 0.1
+value = 1.0
+script = ExtResource("12_ndax4")
+bus_name = "Sfx"
+
+[node name="Button" type="Button" parent="Control/VBoxContainer2"]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../HSlider3")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../HSlider")
+mouse_filter = 2
+theme = ExtResource("2_r8lcp")
+text = "Назад
+"
+
+[connection signal="pressed" from="VBoxContainer/Continue" to="." method="_on_continue_pressed"]
+[connection signal="pressed" from="VBoxContainer/NewGame" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer2/Button" to="Control" method="_on_button_pressed"]

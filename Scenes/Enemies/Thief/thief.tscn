@@ -1,0 +1,165 @@
+[gd_scene load_steps=12 format=3 uid="uid://cfqtlqkan2b83"]
+
+[ext_resource type="Script" path="res://Scenes/Enemies/Thief/Thief.gd" id="1_gxiwl"]
+[ext_resource type="Texture2D" uid="uid://dag2gfu86qp2w" path="res://Assets/Enemies/Thief/Thief_anim.png" id="1_u42gp"]
+[ext_resource type="AudioStream" uid="uid://exq7wladia2r" path="res://Assets/Sound/Sfx/10_Battle_SFX/03_Claw_03.wav" id="3_x03bi"]
+[ext_resource type="AudioStream" uid="uid://dgebw0vu3r0m6" path="res://Assets/Sound/Sfx/10_Battle_SFX/08_Bite_04.wav" id="4_5fw1e"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nrvew"]
+radius = 5.0
+height = 13.1127
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pc0pq"]
+radius = 6.0
+height = 17.3368
+
+[sub_resource type="Animation" id="Animation_4hupi"]
+resource_name = "Death"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [24, 25, 26, 27, 28, 27, 28, 27]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.8),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_uvddu"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [8]
+}
+
+[sub_resource type="Animation" id="Animation_6lbgw"]
+resource_name = "Swing"
+length = 0.55
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [16, 17, 18, 19, 20, 21]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:swinging")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_2ii8w"]
+resource_name = "Walk"
+length = 0.7
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [8, 9, 10, 11, 12, 13, 14]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_igjqt"]
+_data = {
+"Death": SubResource("Animation_4hupi"),
+"RESET": SubResource("Animation_uvddu"),
+"Swing": SubResource("Animation_6lbgw"),
+"Walk": SubResource("Animation_2ii8w")
+}
+
+[node name="Thief" type="Node2D"]
+
+[node name="Thief" type="CharacterBody2D" parent="." groups=["Enemies"]]
+script = ExtResource("1_gxiwl")
+
+[node name="Sprite2D" type="Sprite2D" parent="Thief"]
+position = Vector2(0, -4)
+texture = ExtResource("1_u42gp")
+hframes = 8
+vframes = 5
+frame = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Thief"]
+position = Vector2(1, 5)
+shape = SubResource("CapsuleShape2D_nrvew")
+
+[node name="Hitbox" type="Area2D" parent="Thief"]
+collision_layer = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Thief/Hitbox"]
+position = Vector2(0.888514, 4.41218)
+shape = SubResource("CapsuleShape2D_pc0pq")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Thief"]
+libraries = {
+"": SubResource("AnimationLibrary_igjqt")
+}
+autoplay = "Walk"
+
+[node name="RayCast2D" type="RayCast2D" parent="Thief"]
+position = Vector2(9, -5)
+target_position = Vector2(0, 17)
+
+[node name="RayCast2D2" type="RayCast2D" parent="Thief"]
+position = Vector2(-10.3045, 6.48245)
+rotation = -1.5708
+target_position = Vector2(0, 17)
+
+[node name="RayCast2D3" type="RayCast2D" parent="Thief"]
+position = Vector2(12.0101, 6.44579)
+rotation = 1.5708
+target_position = Vector2(0, 17)
+
+[node name="sfx_hit" type="AudioStreamPlayer2D" parent="Thief"]
+stream = ExtResource("3_x03bi")
+bus = &"Sfx"
+
+[node name="sfx_swing" type="AudioStreamPlayer2D" parent="Thief"]
+stream = ExtResource("4_5fw1e")
+bus = &"Sfx"
+
+[connection signal="area_entered" from="Thief/Hitbox" to="Thief" method="_on_hitbox_area_entered"]

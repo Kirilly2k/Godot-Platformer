@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://0oe6tq28eut"
+path="res://.godot/imported/Bat Death - QuickSounds.com.mp3-25d57bd75c94218f52e6aec3e197e4b6.mp3str"
+
+[deps]
+
+source_file="res://Assets/Sound/Sfx/Bat Death - QuickSounds.com.mp3"
+dest_files=["res://.godot/imported/Bat Death - QuickSounds.com.mp3-25d57bd75c94218f52e6aec3e197e4b6.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
